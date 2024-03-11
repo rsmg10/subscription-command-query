@@ -1,0 +1,78 @@
+syntax = "proto3";
+
+option csharp_namespace = "SubscriptionCommandProto";
+
+package SubscriptionCommandProto;
+ 
+service SubscriptionCommand { 
+  rpc SendInvitation (SendInvitationRequest) returns (Response);
+  rpc CancelInvitation (CancelInvitationRequest) returns (Response);
+  rpc AcceptInvitation (AcceptInvitationRequest) returns (Response);
+  rpc RejectInvitation (RejectInvitationRequest) returns (Response);
+  rpc JoinMember (JoinMemberRequest) returns (Response);
+  rpc RemoveMember (RemoveMemberRequest) returns (Response);
+  rpc Leave (LeaveRequest) returns (Response);
+  rpc ChangePermission (ChangePermissionRequest) returns (Response);
+}
+message ChangePermissionRequest{
+    string account_id = 1;
+    string subscription_id = 2;
+    string member_id = 3;
+    string user_id = 4;
+    int64 permission = 5;
+}
+message LeaveRequest{
+  string account_id = 1;
+  string subscription_id = 2;
+  string member_id = 3;  
+}
+message RemoveMemberRequest{
+  string account_id = 1;
+  string subscription_id = 2;
+  string member_id = 3;
+  string user_id = 4;
+  int64 permission = 5;
+}
+message JoinMemberRequest{
+  string account_id = 1;
+  string subscription_id = 2;
+  string member_id = 3;
+  string user_id = 4;
+  int64 permission = 5; 
+}
+
+message SendInvitationRequest{
+  string account_id = 1;
+  string subscription_id = 2;
+  string member_id = 3;
+  string user_id = 4;
+  int64 permission = 5; 
+}
+
+message CancelInvitationRequest{
+  string account_id = 1;
+  string subscription_id = 2;
+  string member_id = 3;
+  string user_id = 4;
+}
+
+message AcceptInvitationRequest{
+  string account_id = 1;
+  string subscription_id = 2;
+  string member_id = 3;
+  string user_id = 4;
+}
+
+message RejectInvitationRequest{
+  string account_id = 1;
+  string subscription_id = 2;
+  string member_id = 3;
+  string user_id = 4;
+}
+
+
+message Response{
+  string id = 1;
+  string message = 2;
+}
+ 

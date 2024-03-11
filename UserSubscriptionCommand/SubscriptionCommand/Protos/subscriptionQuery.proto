@@ -1,0 +1,63 @@
+ syntax = "proto3";
+
+option csharp_namespace = "SubscriptionCommand";
+
+package SubscriptionQuery;
+
+service SubscriptionQuery { 
+  rpc PendingInvitationsSent (PendingInvitationsSentRequest) returns ( PendingInvitationsSentResponse);
+  rpc GetMembersInSubscription (MembersInSubscriptionRequest) returns (MembersInSubscriptionResponse);
+  rpc PendingInvitationsReceived (PendingInvitationsReceivedRequest) returns (PendingInvitationsReceivedResponse);
+  rpc GetMyJoinedSubscription (JoinedSubscriptionRequest) returns (JoinedSubscriptionResponse);
+}
+message JoinedSubscriptionRequest {
+  string user_id = 1;
+}
+message JoinedSubscriptionResponse {
+  repeated SubscriptionVm subscriptions = 1;
+}
+message SubscriptionVm {
+  string id = 1;
+  string name = 2;
+  string owner_id = 3;
+  string owner_name = 3;
+  string created_at = 4;
+  int64 permissions = 5;
+}
+
+message PendingInvitationsReceivedRequest {
+  string user_id = 1;
+}
+
+message PendingInvitationsReceivedResponse {
+  repeated Invitation invitations = 1;
+}
+message MembersInSubscriptionRequest {
+  string account_id = 1;
+  string subscription_id = 2;
+  string user_id = 3;
+}
+message MembersInSubscriptionResponse {
+  repeated Member members = 1;
+}
+ 
+message PendingInvitationsSentRequest {
+  string account_id = 1;
+  string subscription_id = 2;
+  string user_id = 3;
+}
+message PendingInvitationsSentResponse {
+  repeated Invitation invitations = 1;
+}
+ 
+ message Invitation {
+   string id =1;
+   string subscription_name = 2;
+   string owner_id = 3;
+   string member_id = 4;
+   string created_at = 5;
+ }
+ message Member{
+   string id =1;
+   string name = 2;
+ }

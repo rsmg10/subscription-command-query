@@ -1,0 +1,82 @@
+ syntax = "proto3";
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+option csharp_namespace = "SubscriptionQuery";
+
+package SubscriptionQueryPackage;
+
+service SubscriptionQuery { 
+  rpc PendingInvitationsSent (PendingInvitationsSentRequest) returns ( PendingInvitationsSentResponse);
+  rpc GetMembersInSubscription (MembersInSubscriptionRequest) returns (MembersInSubscriptionResponse);
+  rpc PendingInvitationsReceived (PendingInvitationsReceivedRequest) returns (PendingInvitationsReceivedResponse);
+  rpc GetMyJoinedSubscription (JoinedSubscriptionRequest) returns (JoinedSubscriptionResponse);
+  rpc Notifications (google.protobuf.Empty) returns (stream NotificationResponse);
+}
+ 
+message JoinedSubscriptionRequest {
+  string user_id = 1;
+}
+
+message JoinedSubscriptionResponse {
+  repeated SubscriptionVm subscriptions = 1;
+}
+
+message SubscriptionVm {
+  string id = 1;
+  string name = 2;
+  string user_id = 3;
+  string owner_id = 4;
+  google.protobuf.Timestamp created_at = 5;
+  int64 permissions = 6;
+}
+
+message PendingInvitationsReceivedRequest {
+  string user_id = 1;
+}
+
+message PendingInvitationsReceivedResponse {
+  repeated InvitationVm invitations = 1;
+}
+message MembersInSubscriptionRequest {
+  string account_id = 1;
+  string subscription_id = 2;
+  string user_id = 3;
+}
+message MembersInSubscriptionResponse {
+  repeated Member members = 1;
+}
+message PendingInvitationsSentRequest {
+  string account_id = 1;
+  string subscription_id = 2;
+  string user_id = 3;
+}
+message PendingInvitationsSentResponse {
+  repeated InvitationVm invitations = 1;
+}
+  
+ message InvitationVm {
+   string subscription_name = 1;
+   string id = 2;
+   string sent_by = 3;
+   string owner_id = 4;
+   google.protobuf.Timestamp created_at = 5;
+ }
+ message Member{
+   string id =1;
+   string name = 2;
+ }
+
+ message NotificationResponse {
+	string type = 1; 
+	ConsumedEvent event = 2;
+}
+message ConsumedEvent {
+  string aggregate_id = 1;
+  string user_id = 2;
+  int32 sequence = 3;
+  google.protobuf.Timestamp date_time = 4;
+  int32 version = 5;
+  google.protobuf.StringValue data = 6;
+}
